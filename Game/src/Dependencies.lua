@@ -1,4 +1,5 @@
 Class = require 'lib/class'
-player = require 'src/Player'
+require 'src/Player'
 anim = require 'lib/anim8'
-wf = require 'lib/windfield'
+require 'src/Collision'
+require 'src/Clone'
