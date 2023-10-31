@@ -1,5 +1,5 @@
 wf = require 'lib/windfield'
-world=wf.newWorld(0,98,false) 
+world=wf.newWorld(0,200,false) 
 world:addCollisionClass('platform')
 world:addCollisionClass('player')
 world:addCollisionClass('clone1',{ignores={'player'}})

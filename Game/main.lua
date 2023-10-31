@@ -25,16 +25,20 @@ end
 function love.load()
     love.window.setMode(window_width,window_height)
     love.keyboard.keysPressed = {}
-    
+    timer=0
 end
 
 function love.update(dt)
     world:update(dt)
     player:update(dt)
-    table.insert(clonex,player.collider:getX())
-    table.insert(cloney,player.collider:getY())
     
-    if love.keyboard.wasPressed('c') and i <=5 then 
+    if love.keyboard.isDown('t')  then
+        table.insert(clonex,player.collider:getX())
+        table.insert(cloney,player.collider:getY())
+    end
+    
+    if love.keyboard.wasPressed('c') and i <=5  then           --and not (love.keyboard.wasPressed('d') or love.keyboard.wasPressed('a') or love.keyboard.wasPressed('space')) then 
+        
         obj=Clone(clonex,cloney,'clone'..tostring(i))
         print(type(obj))
         table.insert(clones,obj)
@@ -55,7 +59,7 @@ end
 function love.draw()
    
     player:draw()
-    -- world:draw()
+    world:draw()
     for k,v in pairs(clones) do 
         v:draw()
     end

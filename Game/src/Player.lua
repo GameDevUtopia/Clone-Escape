@@ -4,7 +4,7 @@ Player=Class()
 function Player:init(playerx,playery,player_onground)
     
     
-    self.collider = world:newBSGRectangleCollider(playerx,playery,36,58,10)
+    self.collider = world:newBSGRectangleCollider(playerx,playery,18,29,10)
     self.collider:setFixedRotation(true)
     
     self.collider:setCollisionClass('player')
@@ -85,5 +85,5 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    self.animation:draw(self.player_img,self.x,self.y,0,2,2,16,19)
+    self.animation:draw(self.player_img,self.x,self.y,0,0.5625,0.5625,16,19)
 end
