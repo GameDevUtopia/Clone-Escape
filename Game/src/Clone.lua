@@ -4,7 +4,7 @@ function Clone:init(clonex,cloney,name)
     self.clonex = clonex
     self.cloney = cloney
    
-    self.clonecollider=world:newBSGRectangleCollider(self.clonex[1],self.cloney[1],36,58,10)
+    self.clonecollider=world:newBSGRectangleCollider(self.clonex[1],self.cloney[1],10,16,2)
     self.clonecollider:setFixedRotation(true)
     self.clonecollider:setCollisionClass(name)
     self.i=2
@@ -25,7 +25,8 @@ function Clone:init(clonex,cloney,name)
 end
 function Clone:update(dt)
     self.animation:update(dt)
-    
+    self.x=self.clonecollider:getX()
+    self.y=self.clonecollider:getY()
     if self.i<=#self.clonex then
         self.x=self.clonex[self.i-1]
         self.y=self.cloney[self.i-1]
@@ -54,5 +55,5 @@ function Clone:update(dt)
     
 end
 function Clone:draw()
-    self.animation:draw(self.clone_img,self.x,self.y,0,2,2,16,19)
+    self.animation:draw(self.clone_img,self.x,self.y,0,0.8,0.8,16,19)
 end

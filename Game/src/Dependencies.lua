@@ -1,5 +1,8 @@
 Class = require 'lib/class'
-require 'src/Player'
+
 anim = require 'lib/anim8'
 require 'src/Collision'
 require 'src/Clone'
+
+camera = require 'lib/camera'
+require 'src/maps/map0'

@@ -1,15 +1,15 @@
 require 'src/Dependencies'
 
 window_width=1280
-window_height=720
-
+window_height=600
+cam = camera()
 
 clones={}
 clonex={}
 cloney={}
 i=1
 
-player=Player(250,600)
+
 function love.keypressed(key)
     -- add to our table of keys pressed this frame
     love.keyboard.keysPressed[key] = true
@@ -25,13 +25,13 @@ end
 function love.load()
     love.window.setMode(window_width,window_height)
     love.keyboard.keysPressed = {}
-    timer=0
+    map0=Map0()
+    
 end
 
 function love.update(dt)
-    world:update(dt)
-    player:update(dt)
-    
+    map0:update(dt)
+    cam:lookAt(270,140)
     if love.keyboard.isDown('t')  then
         table.insert(clonex,player.collider:getX())
         table.insert(cloney,player.collider:getY())
@@ -44,8 +44,7 @@ function love.update(dt)
         table.insert(clones,obj)
         clonex={} 
         cloney={}
-        player.collider:setX(250)
-        player.collider:setY(600)
+        map0:reset()
         i=i+1 
       
     end
@@ -57,11 +56,16 @@ function love.update(dt)
 end
 
 function love.draw()
-   
-    player:draw()
-    world:draw()
-    for k,v in pairs(clones) do 
-        v:draw()
-    end
+    cam:attach()
+        cam:zoomTo(2.365)
+        map0:draw()
+        player:draw()
+        for k,v in pairs(clones) do 
+            v:draw()
+        end
+       
+        
+        -- world:draw()
+    cam:detach()
     
 end

@@ -4,34 +4,31 @@ Player=Class()
 function Player:init(playerx,playery,player_onground)
     
     
-    self.collider = world:newBSGRectangleCollider(playerx,playery,18,29,10)
+    self.collider = world:newBSGRectangleCollider(playerx,playery,10,16,2)
     self.collider:setFixedRotation(true)
     
     self.collider:setCollisionClass('player')
     self.playerspeed=100
     
-    --------Animation-------------
+    --------------------------Animation--------------------------------------
     self.player_img=love.graphics.newImage("assets/player_img.png")
     local grid=anim.newGrid(32,32,self.player_img:getWidth(),self.player_img:getHeight())
     self.animations={}
     ----------left-----------------
-    self.animations.leftjump=anim.newAnimation(grid('1-8',1),0.01)       
+    self.animations.leftjump=anim.newAnimation(grid('1-8',1),0.2)       
     self.animations.leftrun=anim.newAnimation(grid('1-6',3),0.08)
     self.animations.leftidle=anim.newAnimation(grid('1-4',5),0.2)
+    self.animations.leftpush=anim.newAnimation(grid('1-4',2),0.2)
     ------------right-------------
-    self.animations.rightjump=anim.newAnimation(grid('1-8',6),0.01)
-    self.animations.rightidle=anim.newAnimation(grid('1-4',10),0.2)
+    self.animations.rightjump=anim.newAnimation(grid('1-8',6),0.2)
     self.animations.rightrun=anim.newAnimation(grid('1-6',8),0.08)
-   
+    self.animations.rightidle=anim.newAnimation(grid('1-4',10),0.2)
+    self.animations.rightpush=anim.newAnimation(grid('1-6',7),0.08)
+    ---------------------------------------------------------------------
     self.animation = self.animations.rightidle
-    self.pose="right"
+    self.pose="right" --Determines Pose of thr player
     self.onground=false
-    -- function custom_collision(collider_1,collider_2,contact)
-    --     if collider_1.collision_class == 'player' and collider_2.collision_class == 'platform' then
-    --         self.onground=true
-    --     end
-    -- end
-    -- self.collider:setPreSolve(custom_collision)
+   
 end
     
 function Player:update(dt)
@@ -39,11 +36,12 @@ function Player:update(dt)
    self.x=self.collider:getX()
    self.y=self.collider:getY()
    self.vx,self.vy=self.collider:getLinearVelocity()
-   if self.collider:enter('platform') then 
+   
+   if self.collider:enter('platform') or self.collider:enter('block') then  ------Checks if player is on ground
         self.onground=true
    end
 --    print(self.onground)
-  
+  ------------------------------Movement---------------------------------
     if love.keyboard.isDown('a') then
         self.vx=self.playerspeed*-1
         self.collider:setLinearVelocity(self.vx,self.vy)
@@ -72,12 +70,12 @@ function Player:update(dt)
  
     
     if love.keyboard.wasPressed('space') and self.onground  then
-        self.collider:applyLinearImpulse(0,-500)
+        self.collider:applyLinearImpulse(0,-75)
         self.onground=false
-      
+        
     end
     -- print(self.onground)
-       
+ --------------------------------------------------------------------------------       
 
    
     
@@ -85,5 +83,5 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    self.animation:draw(self.player_img,self.x,self.y,0,0.5625,0.5625,16,19)
+    self.animation:draw(self.player_img,self.x,self.y,0,0.8,0.8,16,19)
 end
