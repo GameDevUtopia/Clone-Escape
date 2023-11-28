@@ -42,7 +42,7 @@ function Player:update(dt)
    end
 --    print(self.onground)
   ------------------------------Movement---------------------------------
-    if love.keyboard.isDown('a') then
+    if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
         self.vx=self.playerspeed*-1
         self.collider:setLinearVelocity(self.vx,self.vy)
         self.animation=self.animations.leftrun
@@ -55,7 +55,7 @@ function Player:update(dt)
         end
     end
 
-    if love.keyboard.isDown('d') then
+    if love.keyboard.isDown('d') or love.keyboard.isDown('right')then
         self.vx=self.playerspeed
         self.collider:setLinearVelocity(self.vx,self.vy)
         self.animation=self.animations.rightrun
@@ -69,7 +69,7 @@ function Player:update(dt)
     end
  
     
-    if love.keyboard.wasPressed('space') and self.onground  then
+    if (love.keyboard.wasPressed('space') or love.keyboard.isDown('w') or love.keyboard.isDown('up') ) and self.onground  then
         self.collider:applyLinearImpulse(0,-75)
         self.onground=false
         
