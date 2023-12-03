@@ -32,10 +32,10 @@ end
 function love.update(dt)
     map0:update(dt)
     cam:lookAt(270,140)
-    if love.keyboard.isDown('t')  then
-        table.insert(clonex,player.collider:getX())
-        table.insert(cloney,player.collider:getY())
-    end
+    -- if love.keyboard.isDown('t')  then
+    table.insert(clonex,player.collider:getX())
+    table.insert(cloney,player.collider:getY())
+    -- end
     
     if love.keyboard.wasPressed('c') and i <=5  then           --and not (love.keyboard.wasPressed('d') or love.keyboard.wasPressed('a') or love.keyboard.wasPressed('space')) then 
         
