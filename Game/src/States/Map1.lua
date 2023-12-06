@@ -1,7 +1,7 @@
 require 'src/Collision'
 sti = require 'lib/sti'
 require 'src/Player'
-Map1 = Class()
+Map1 = Class{__includes = BaseState}
 function Map1:init()
     self.map1 = sti('levels/level1.lua')
     player.collider:setY(180)
@@ -73,7 +73,7 @@ function Map1:update(dt)
             self.vx =-50
         end 
     end
-    player:update(dt)
+    
     
     if (player.collider:enter('button')) then 
         self.acid_wall:destroy()
@@ -124,9 +124,10 @@ end
 function Map1:reset()
     player.collider:setX(20)
     player.collider:setY(180)
-    self.vx =0
+    
     self.movPlatform:setX(180)
     self.movPlatform:setY(126)
+    self.vx =0
     
     self.acid_present = true
 end    

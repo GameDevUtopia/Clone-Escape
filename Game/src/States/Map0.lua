@@ -2,8 +2,9 @@ require 'src/Collision'
 sti = require 'lib/sti'
 require 'src/Player'
 Map0 =Class()
+
 function Map0:init()
-    
+    self.door = Door(522,104)    
     player.collider:setX(72)
     player.collider:setY(68)
     self.map0=sti('levels/level0.lua')
@@ -32,11 +33,12 @@ function Map0:init()
     self.block = world:newRectangleCollider(216,126,14,16)
     self.block:setFixedRotation(true)
     self.block:setCollisionClass('block')
+    
 end
 function Map0:update(dt)
     cam:lookAt(270,140)
-    world:update(dt)
-    player:update(dt)
+    self.door:update('map1')
+    
 end
 function Map0:draw()
     cam:zoomTo(2.365)
@@ -51,8 +53,20 @@ function Map0:reset()
     self.block:setX(216)
     self.block:setY(126)
 end
-function Map0:destroy()
+function Map0:exit()
     self.block:destroy()
+    self.door.door:destroy()
+    
+    
+    i =1
+    for i , j in pairs(clones) do
+        j.clonecollider:destroy()
+    end    
+    clones={}
+    clonex={}
+    cloney={}
+
+    
     for i,j in pairs(self.platforms) do
         j:destroy()
     end

@@ -1,6 +1,7 @@
 require 'src/Collision'
 Clone=Class()
 function Clone:init(clonex,cloney,name)
+   
     self.clonex = clonex
     self.cloney = cloney
     
