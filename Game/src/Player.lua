@@ -1,7 +1,7 @@
 require 'src/Collision'
 Player=Class()
 
-function Player:init(playerx,playery,player_onground)
+function Player:init(playerx,playery)
     
     
     self.collider = world:newBSGRectangleCollider(playerx,playery,10,16,2)

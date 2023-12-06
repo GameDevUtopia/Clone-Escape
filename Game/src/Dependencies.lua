@@ -6,3 +6,4 @@ require 'src/Clone'
 
 camera = require 'lib/camera'
 require 'src/maps/map0'
+require 'src/maps/map1'
