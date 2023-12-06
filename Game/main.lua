@@ -23,6 +23,13 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.load()
+
+    gStateMachine = StateMachine {
+        ['map0'] = function() return Map0() end,
+        ['map1'] = function() return Map1() end
+    }
+    gStateMachine:change('map0')
+
     love.window.setMode(window_width,window_height)
     love.keyboard.keysPressed = {}
     --map0=Map0()
@@ -32,14 +39,16 @@ function love.load()
 end
 
 function love.update(dt)
-    player:update(dt)
-    map1:update(dt)
-    world:update(dt)
+    -- map1:update(dt)
+    
+    -- world:update(dt)
+    gStateMachine:update(dt)
+    -- player:update(dt)
    --map0:update(dt)
-    if love.keyboard.isDown('t')  then
+    -- if love.keyboard.isDown('t')  then
         table.insert(clonex,player.collider:getX())
         table.insert(cloney,player.collider:getY())
-    end
+    -- endd
     
     if love.keyboard.wasPressed('c') and i <=5  then          
         
@@ -65,7 +74,9 @@ end
 function love.draw()
     cam:attach()
         --map0:draw()
-        map1:draw()
+        -- map1:draw()
+        gStateMachine:draw()
+
         player:draw()
     
         for k,v in pairs(clones) do 
