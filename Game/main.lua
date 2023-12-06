@@ -32,6 +32,7 @@ function love.load()
 end
 
 function love.update(dt)
+<<<<<<< HEAD
     player:update(dt)
     map1:update(dt)
     world:update(dt)
@@ -40,6 +41,14 @@ function love.update(dt)
         table.insert(clonex,player.collider:getX())
         table.insert(cloney,player.collider:getY())
     end
+=======
+    map0:update(dt)
+    cam:lookAt(270,140)
+    -- if love.keyboard.isDown('t')  then
+    table.insert(clonex,player.collider:getX())
+    table.insert(cloney,player.collider:getY())
+    -- end
+>>>>>>> 67de44f1a093d9d4621c7cec2f1d6cf7694d85fc
     
     if love.keyboard.wasPressed('c') and i <=5  then          
         
