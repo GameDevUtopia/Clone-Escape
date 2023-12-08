@@ -2,7 +2,9 @@ require 'src/Collision'
 
 Door = Class()
 function Door:init(x,y)
-    self.door =world:newRectangleCollider(x,y,18,20)
+    self.x=x
+    self.y =y
+    self.door =world:newRectangleCollider(self.x,self.y,18,20)
     self.door:setType('static')
     self.door:setCollisionClass('door')
     self.door_closed = love.graphics.newImage('assets/doorclosed.png')
@@ -16,5 +18,5 @@ function Door:update(state)
     end    
 end    
 function Door:draw()
-    love.graphics.draw(self.door_closed,x,y)
+    love.graphics.draw(self.door_closed,self.x,self.y)
 end    

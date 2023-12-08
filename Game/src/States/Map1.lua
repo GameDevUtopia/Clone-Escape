@@ -1,7 +1,7 @@
 require 'src/Collision'
 sti = require 'lib/sti'
 require 'src/Player'
-Map1 = Class{__includes = BaseState}
+Map1 = Class()
 function Map1:init()
     self.map1 = sti('levels/level1.lua')
     player.collider:setY(180)
@@ -9,6 +9,7 @@ function Map1:init()
     self.platforms={}
     self.walls={}
     self.acid={}
+    self.door = Door(881,131)
     --------------------------------------------------------------
     self.acid_wall = world:newRectangleCollider(346,90,10,18*3)
     self.acid_wall:setType('static')
@@ -58,6 +59,7 @@ function Map1:init()
    self.button_img1 = love.graphics.newImage('assets/Level1/kenney_pixel-platformer-industrial-expansion/Tiles/tile_0064.png')
    self.button_img2 = love.graphics.newImage('assets/Level1/kenney_pixel-platformer-industrial-expansion/Tiles/tile_0065.png')
    self.button_pressed = false
+   self.button_sfx = love.audio.newSource('sounds/click-button-140881.mp3','stream')
     ----------------------------------------------------------------------
 end
 function Map1:update(dt)
@@ -79,6 +81,7 @@ function Map1:update(dt)
         self.acid_wall:destroy()
         self.acid_present =false
         self.button_pressed = true
+        self.button_sfx:play()
         
     elseif (player.collider:exit('button'))then 
         self.acid_wall = world:newRectangleCollider(346,90,10,18*3)
@@ -91,17 +94,20 @@ function Map1:update(dt)
         if (j.clonecollider:enter('button')) then 
             self.acid_wall:destroy()
             self.acid_present =false
+            self.button_pressed = true
+            self.button_sfx:play()
         elseif (j.clonecollider:exit('button'))then 
             self.acid_wall = world:newRectangleCollider(346,90,10,18*3)
             self.acid_wall:setType('static')
             self.acid_wall:setCollisionClass('Acid')
             self.acid_present = true
+            self.button_pressed = false
         end 
     end
     
     self.movPlatform:setX(self.movPlatform:getX()+self.vx*dt)
     cam:lookAt(450,140)
-   
+    self.door:update('map2')
    
 end
 function Map1:draw()
@@ -118,7 +124,7 @@ function Map1:draw()
         love.graphics.draw(self.button_img1,330,72,-1.57)
         
     end    
-
+    self.door:draw()
     
 end
 function Map1:reset()
@@ -130,4 +136,29 @@ function Map1:reset()
     self.vx =0
     
     self.acid_present = true
+end    
+function Map1:exit()
+    
+    self.door.door:destroy()
+    
+    self.button:destroy()
+    self.movPlatform:destroy()
+    i =1
+    for i , j in pairs(clones) do
+        j.clonecollider:destroy()
+    end    
+    clones={}
+    clonex={}
+    cloney={}
+
+    
+    for i,j in pairs(self.platforms) do
+        j:destroy()
+    end
+    for i,j in pairs(self.walls) do 
+        j:destroy()
+    end    
+    for i,j in pairs(self.acid) do 
+        j:destroy()
+    end
 end    
